@@ -1,17 +1,4 @@
-local function read_file(file_name)
-  local file = io.open(file_name, "rb")
-  local content = file:read("*all")
-  file:close()
-  return content
-end
-
-local function get_numbers(str)
-  local numbers = {}
-  for n in string.gmatch(str, '([^,]+)') do
-    table.insert(numbers, tonumber(n))
-  end
-  return numbers
-end
+local utils = require "utils"
 
 local function simulate_day(input)
   local updated = {}
@@ -26,7 +13,7 @@ local function simulate_day(input)
   return updated
 end
 
-local fish = get_numbers(read_file("day_6.txt"))
+local fish = utils.split_string(utils.read_file("day_6.txt"), ",")
 
 for _ = 1, 80 do
   fish = simulate_day(fish)
@@ -36,7 +23,7 @@ print("Part 1: " .. #fish)
 
 local function get_numbers_grouped(str)
   local numbers = {}
-  for n in string.gmatch(str, '([^,]+)') do
+  for n in string.gmatch(str, "([^,]+)") do
     numbers[tonumber(n + 1)] = (numbers[tonumber(n + 1)] or 0) + 1
   end
   return numbers
@@ -56,7 +43,7 @@ local function simulate_day_grouped(input)
   return updated
 end
 
-local fish_grouped = get_numbers_grouped(read_file("day_6.txt"))
+local fish_grouped = get_numbers_grouped(utils.read_file("day_6.txt"))
 
 for _ = 1, 256 do
   fish_grouped = simulate_day_grouped(fish_grouped)
